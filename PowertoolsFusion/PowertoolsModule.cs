@@ -24,8 +24,7 @@ namespace PowertoolsFusion {
                 ModuleMessageManager.RegisterHandler(type);
             }
             var fusionTool = new FusionTool();
-            ToolLoader.loadedTools.Add(fusionTool);
-            fusionTool.Start();
+            ToolLoader.LoadTool(fusionTool);
         }
 
         protected override void OnModuleUnregistered() {
