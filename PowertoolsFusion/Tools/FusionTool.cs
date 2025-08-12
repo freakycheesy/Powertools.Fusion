@@ -26,6 +26,8 @@ namespace Powertools.Fusion.Tools {
 
         private void AdminMenu() {
             var adminMenu = Page.CreatePage("Admin Panel", Color.green);
+            adminMenu.CreateInt("Rig ID", Color.green, 0, 1, 0, 40, (a) => RigID = a).ElementTooltip = "Choose which rig to mess with :)";
+
             adminMenu.CreateFunction("Fling", Color.green, FlingPlayer);
             adminMenu.CreateFunction("Freeze Physics Rig", Color.green, FreezeRig);
             adminMenu.CreateFunction("Fly Up", Color.green, FlyUp);
