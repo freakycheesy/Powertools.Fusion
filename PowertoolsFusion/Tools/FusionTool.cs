@@ -12,14 +12,6 @@ namespace Powertools.Fusion.Tools {
     public class FusionTool : BaseTool {
         public override string ToolName => "Fusion Tools";
 
-        public override void Start() {
-            base.Start();
-        }
-
-        public override void MelonCreator() {
-            base.MelonCreator();
-        }
-
         public override void BoneMenuCreator() {
             base.BoneMenuCreator();
             AdminMenu();
@@ -28,7 +20,7 @@ namespace Powertools.Fusion.Tools {
 
         private void AdminMenu() {
             var adminMenu = Page.CreatePage("Admin Panel", Color.green);
-            adminMenu.CreateInt("Rig ID", Color.green, 0, 1, 0, 40, (a) => RigID = a).ElementTooltip = "Choose which rig to mess with :)";
+            adminMenu.CreateInt("Rig ID", Color.green, 0, 1, 0, 40, (a) => RigID = a);
             GamemodeManager.OnGamemodeStarted += GamemodeManager_OnGamemodeStarted;
             GamemodeManager.OnGamemodeStopped += GamemodeManager_OnGamemodeStopped;
 

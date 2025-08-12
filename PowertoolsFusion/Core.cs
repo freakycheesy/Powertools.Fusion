@@ -15,7 +15,6 @@ namespace Powertools.Fusion
         public override void OnInitializeMelon()
         {
             LoggerInstance.Msg("Initialized.");
-            ToolLoader.LoadTools(tools);
             if (FindMelon("LabFusion", "Lakatrazz") != null) {
                 LoadModule();
             }
@@ -24,9 +23,5 @@ namespace Powertools.Fusion
         private static void LoadModule() {
             LabFusion.SDK.Modules.ModuleManager.RegisterModule<PowertoolsModule>();
         }
-
-        public BaseTool[] tools = [
-            new FusionTool(),
-        ];
     }
 }

@@ -1,4 +1,7 @@
 ﻿using LabFusion.SDK.Modules;
+using Powertools.Fusion.Tools;
+using PowerTools;
+using PowertoolsFusion.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +19,13 @@ namespace PowertoolsFusion {
         public override ConsoleColor Color => ConsoleColor.Red;
 
         protected override void OnModuleRegistered() {
-            ModuleMessageManager.LoadHandlers(System.Reflection.Assembly.GetExecutingAssembly());
+            Type[] types = [typeof(KillMessage), typeof(FreezeRigMessage), typeof(FlyUpMessage), typeof(FlingMessage)];
+            foreach (Type type in types) {
+                ModuleMessageManager.RegisterHandler(type);
+            }
+            var fusionTool = new FusionTool();
+            ToolLoader.loadedTools.Add(fusionTool);
+            fusionTool.Start();
         }
 
         protected override void OnModuleUnregistered() {

@@ -11,8 +11,8 @@ namespace PowertoolsFusion.Serializables {
     public class SenderNetSerializable : INetSerializable {
         public int? GetSize() => Receiver.GetSize() + Sender.GetSize();
 
-        public PlayerID Receiver;
-        public PlayerID Sender;
+        public PlayerID Receiver = new();
+        public PlayerID Sender = new();
 
         public void Serialize(INetSerializer serializer) {
             serializer.SerializeValue(ref Receiver);
