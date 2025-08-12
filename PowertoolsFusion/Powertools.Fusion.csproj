@@ -541,8 +541,8 @@
 
 	<ItemGroup>
 		<Compile Include="Core.cs" />
+		<Compile Include="Messages\NotifcationMessage.cs" />
 		<Compile Include="Messages\FlingMessage.cs" />
-		<Compile Include="Messages\FlyUpMessage.cs" />
 		<Compile Include="Messages\FreezeRigMessage.cs" />
 		<Compile Include="Messages\DisableGodmode.cs" />
 		<Compile Include="Messages\KillMessage.cs" />

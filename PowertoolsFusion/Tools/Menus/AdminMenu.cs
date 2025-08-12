@@ -16,7 +16,6 @@ namespace PowertoolsFusion.Tools.Menus {
 
             page.CreateFunction("Fling", Color.green, FlingPlayer);
             page.CreateFunction("Freeze Physics Rig", Color.green, FreezeRig);
-            page.CreateFunction("Launch", Color.green, FlyUp);
             page.CreateFunction("Disable Godmode", Color.green, DisableGodmode);
             page.CreateFunction("Kill Rig", Color.green, Kill);
         }
@@ -38,9 +37,6 @@ namespace PowertoolsFusion.Tools.Menus {
 
         private void FreezeRig() {
             FusionTool.SendMessage<FreezeRigMessage>((byte)RigID);
-        }
-        private void FlyUp() {
-            FusionTool.SendMessage<FlyUpMessage>((byte)RigID);
         }
 
         private void FlingPlayer() {

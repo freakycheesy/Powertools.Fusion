@@ -19,10 +19,7 @@ namespace PowertoolsFusion {
         public override ConsoleColor Color => ConsoleColor.Red;
 
         protected override void OnModuleRegistered() {
-            Type[] types = [typeof(KillMessage), typeof(FreezeRigMessage), typeof(FlyUpMessage), typeof(FlingMessage)];
-            foreach (Type type in types) {
-                ModuleMessageManager.RegisterHandler(type);
-            }
+            ModuleMessageManager.LoadHandlers(System.Reflection.Assembly.GetExecutingAssembly());
             var fusionTool = new FusionTool();
             ToolLoader.LoadTool(fusionTool);
         }

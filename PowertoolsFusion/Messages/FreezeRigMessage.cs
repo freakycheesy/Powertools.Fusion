@@ -12,6 +12,7 @@ namespace PowertoolsFusion.Messages {
             protected set;
         } = PermissionLevel.OPERATOR;
         protected override void ReceivedMessageEvent(NetworkPlayer localPlayer, NetworkPlayer sender, string message) {
+            base.ReceivedMessageEvent(localPlayer, sender, message);
             localPlayer.RigSkeleton.physicsPelvis.isKinematic = !localPlayer.RigSkeleton.physicsPelvis.isKinematic;
         }
     }

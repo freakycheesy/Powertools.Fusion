@@ -13,6 +13,7 @@ namespace PowertoolsFusion.Messages {
         } = PermissionLevel.OPERATOR;
 
         protected override void ReceivedMessageEvent(NetworkPlayer localPlayer, NetworkPlayer sender, string message) {
+            base.ReceivedMessageEvent(localPlayer, sender, message);
             localPlayer.RigSkeleton.health?.Dying(100f);
             localPlayer.RigSkeleton.health?.Death();
             localPlayer.RigSkeleton.health?.Respawn();

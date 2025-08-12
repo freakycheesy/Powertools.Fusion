@@ -12,10 +12,14 @@ using UnityEngine;
 namespace Powertools.Fusion.Tools {
     public class FusionTool : BaseTool {
         public override string ToolName => "Fusion Tools";
-
+        public static string message;
         public override void BoneMenuCreator() {
             base.BoneMenuCreator();
             new AdminMenu(Page);
+            Page.CreateString("Message", Color.green, string.Empty, (a) => message = a);
+            Page.CreateFunction("Send Message", Color.green, () => {
+                SendMessage<NotifcationMessage>(RelayType.ToClients, message);
+            });
         }
 
         public override void OnSetEnabled(bool value) {
