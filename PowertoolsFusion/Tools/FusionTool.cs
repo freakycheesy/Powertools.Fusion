@@ -1,6 +1,8 @@
 ﻿using BoneLib;
 using LabFusion.Entities;
 using LabFusion.Network;
+using LabFusion.SDK.Gamemodes;
+using PowerTools;
 using PowerTools.Tools;
 using PowertoolsFusion.Messages;
 using PowertoolsFusion.Serializables;
@@ -27,11 +29,23 @@ namespace Powertools.Fusion.Tools {
         private void AdminMenu() {
             var adminMenu = Page.CreatePage("Admin Panel", Color.green);
             adminMenu.CreateInt("Rig ID", Color.green, 0, 1, 0, 40, (a) => RigID = a).ElementTooltip = "Choose which rig to mess with :)";
+            GamemodeManager.OnGamemodeStarted += GamemodeManager_OnGamemodeStarted;
+            GamemodeManager.OnGamemodeStopped += GamemodeManager_OnGamemodeStopped;
 
             adminMenu.CreateFunction("Fling", Color.green, FlingPlayer);
             adminMenu.CreateFunction("Freeze Physics Rig", Color.green, FreezeRig);
             adminMenu.CreateFunction("Fly Up", Color.green, FlyUp);
             adminMenu.CreateFunction("Kill Rig", Color.green, Kill);
+        }
+
+        private void GamemodeManager_OnGamemodeStopped() {
+            HealthSettings.GodMode.Value = GodModeSaved;
+        }
+
+        public static bool GodModeSaved;
+        private void GamemodeManager_OnGamemodeStarted() {
+            GodModeSaved = HealthSettings.GodMode.Value;
+            HealthSettings.GodMode.Value = false;
         }
 
         public override void OnSetEnabled(bool value) {
