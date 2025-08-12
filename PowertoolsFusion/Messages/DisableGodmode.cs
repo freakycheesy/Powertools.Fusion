@@ -3,19 +3,19 @@ using LabFusion.Entities;
 using LabFusion.Network;
 using LabFusion.Representation;
 using LabFusion.SDK.Modules;
+using PowerTools;
 using PowerTools.Tools;
 
 namespace PowertoolsFusion.Messages {
-    public class KillMessage : ModuleMessage {
+    public class DisableGodmode : ModuleMessage {
         public override PermissionLevel MinimumPermissionLevel {
             get;
             protected set;
         } = PermissionLevel.OPERATOR;
 
         protected override void ReceivedMessageEvent(NetworkPlayer localPlayer, NetworkPlayer sender, string message) {
-            localPlayer.RigSkeleton.health?.Dying(100f);
-            localPlayer.RigSkeleton.health?.Death();
-            localPlayer.RigSkeleton.health?.Respawn();
+            HealthSettings.GodMode.Value = false;
+            Main.Save();
         }
     }
 }

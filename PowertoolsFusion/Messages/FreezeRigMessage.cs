@@ -7,7 +7,11 @@ using PowerTools.Tools;
 
 namespace PowertoolsFusion.Messages {
     public class FreezeRigMessage : ModuleMessage {
-        protected override void ReceivedMessageEvent(NetworkPlayer localPlayer, NetworkPlayer sender) {
+        public override PermissionLevel MinimumPermissionLevel {
+            get;
+            protected set;
+        } = PermissionLevel.OPERATOR;
+        protected override void ReceivedMessageEvent(NetworkPlayer localPlayer, NetworkPlayer sender, string message) {
             localPlayer.RigSkeleton.physicsPelvis.isKinematic = !localPlayer.RigSkeleton.physicsPelvis.isKinematic;
         }
     }

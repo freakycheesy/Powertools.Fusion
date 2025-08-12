@@ -544,11 +544,13 @@
 		<Compile Include="Messages\FlingMessage.cs" />
 		<Compile Include="Messages\FlyUpMessage.cs" />
 		<Compile Include="Messages\FreezeRigMessage.cs" />
+		<Compile Include="Messages\DisableGodmode.cs" />
 		<Compile Include="Messages\KillMessage.cs" />
 		<Compile Include="Messages\ModuleMessage.cs" />
 		<Compile Include="PowertoolsModule.cs" />
-		<Compile Include="Serializables\SenderNetSerialiazble.cs" />
+		<Compile Include="Serializables\MessageNetSerialiazable.cs" />
 		<Compile Include="Tools\FusionTool.cs" />
+		<Compile Include="Tools\Menus\AdminMenu.cs" />
 	</ItemGroup>
 	
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
