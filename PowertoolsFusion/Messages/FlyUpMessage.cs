@@ -10,7 +10,7 @@ namespace PowertoolsFusion.Messages {
     public class FlyUpMessage : ModuleMessage {
         protected override void ReceivedMessageEvent(NetworkPlayer localPlayer, NetworkPlayer sender) {
             for (int i = 0; i < 50; i++) {
-                localPlayer.RigSkeleton.physicsPelvis.position += Vector3.up * 2;
+                localPlayer.RigSkeleton.physicsPelvis.AddForce(Vector3.up * 2);
             }
         }
     }

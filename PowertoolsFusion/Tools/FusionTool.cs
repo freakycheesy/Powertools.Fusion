@@ -26,7 +26,7 @@ namespace Powertools.Fusion.Tools {
 
             adminMenu.CreateFunction("Fling", Color.green, FlingPlayer);
             adminMenu.CreateFunction("Freeze Physics Rig", Color.green, FreezeRig);
-            adminMenu.CreateFunction("Fly Up", Color.green, FlyUp);
+            adminMenu.CreateFunction("Launch", Color.green, FlyUp);
             adminMenu.CreateFunction("Kill Rig", Color.green, Kill);
         }
 
@@ -37,7 +37,7 @@ namespace Powertools.Fusion.Tools {
         public static bool GodModeSaved;
         private void GamemodeManager_OnGamemodeStarted() {
             GodModeSaved = HealthSettings.GodMode.Value;
-            HealthSettings.GodMode.Value = false;
+            while(GamemodeManager.IsGamemodeStarted)HealthSettings.GodMode.Value = false;
         }
 
         public override void OnSetEnabled(bool value) {
@@ -50,25 +50,31 @@ namespace Powertools.Fusion.Tools {
 
 
         private void Kill() {
-            SendMessage<KillMessage>();
+            SendMessage<KillMessage>((byte)RigID);
         }
 
         private void FreezeRig() {
-            SendMessage<FreezeRigMessage>();
+            SendMessage<FreezeRigMessage>((byte)RigID);
         }
         private void FlyUp() {
-            SendMessage<FlyUpMessage>();
+            SendMessage<FlyUpMessage>((byte)RigID);
         }
 
         private void FlingPlayer() {
-            SendMessage<FlingMessage>();
+            SendMessage<FlingMessage>((byte)RigID);
         }
 
-        public static void SendMessage<T>(RelayType relayType = RelayType.ToClients, NetworkChannel network = NetworkChannel.Reliable) where T : PowertoolsFusion.Messages.ModuleMessage {
-            NetworkPlayerManager.TryGetPlayer(Player.RigManager, out var sender);
-            NetworkPlayerManager.TryGetPlayer((byte)RigID, out var receiver);
-            var data = new SenderNetSerializable() { Receiver = receiver.PlayerID, Sender = sender.PlayerID };
+        public static void SendMessage<T>(byte targetId, NetworkChannel network = NetworkChannel.Reliable) where T : PowertoolsFusion.Messages.ModuleMessage {
+            if (!(NetworkPlayerManager.TryGetPlayer(Player.RigManager, out var sender) && NetworkPlayerManager.TryGetPlayer(targetId, out _)))
+                return;
+            var data = new SenderNetSerializable() { Sender = sender.PlayerID };
+            MessageRelay.RelayModule<T, SenderNetSerializable>(data, new MessageRoute(targetId, network));
+        }
 
+        public static void SendMessage<T>(RelayType relayType, NetworkChannel network = NetworkChannel.Reliable) where T : PowertoolsFusion.Messages.ModuleMessage {
+            if (!NetworkPlayerManager.TryGetPlayer(Player.RigManager, out var sender))
+                return;
+            var data = new SenderNetSerializable() {Sender = sender.PlayerID };
             MessageRelay.RelayModule<T, SenderNetSerializable>(data, new MessageRoute(relayType, network));
         }
     }

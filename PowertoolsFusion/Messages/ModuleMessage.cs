@@ -3,18 +3,21 @@ using LabFusion.Entities;
 using LabFusion.Network;
 using LabFusion.Representation;
 using LabFusion.SDK.Modules;
+using PowertoolsFusion.Serializables;
 
 namespace PowertoolsFusion.Messages {
     public class ModuleMessage : ModuleMessageHandler{
         protected override void OnHandleMessage(ReceivedMessage received) {
             // Get Player Refs
+            var data = received.ReadData<SenderNetSerializable>();
+
+            var senderId = data.Sender;
+
             NetworkPlayerManager.TryGetPlayer(Player.RigManager, out var localPlayer);
-            NetworkPlayerManager.TryGetPlayer(received.Bytes[0], out var receiver);
-            NetworkPlayerManager.TryGetPlayer(received.Bytes[1], out var sender);
-            FusionPermissions.FetchPermissionLevel(sender.PlayerID, out var level, out _);
-            bool isReceivedPlayerLocal = receiver == localPlayer;
-            bool hasPerms = level >= PermissionLevel.OPERATOR || sender.PlayerID == receiver.PlayerID;
-            if (isReceivedPlayerLocal && hasPerms) {
+            NetworkPlayerManager.TryGetPlayer(senderId, out var sender);
+            FusionPermissions.FetchPermissionLevel(senderId, out var level, out _);
+            bool senderHasPerms = level >= PermissionLevel.OPERATOR || sender.PlayerID == localPlayer.PlayerID;
+            if (senderHasPerms) {
                 ReceivedMessageEvent(localPlayer, sender);
             }
         }
